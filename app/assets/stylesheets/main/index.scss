@@ -14,31 +14,19 @@ nav.navbar {
 	a.navbar-brand {
 		padding: 5px 15px;
 	}
-
-	ul.navbar-nav {
-		.login-btn, .signup-btn {
-			padding: 15px 5px 5px;
-		}
-		.login-btn:hover, .signup-btn:hover {
-			border-bottom: 1px solid #ccc;
-		}
-		.login-btn {
-			margin-right: 10px;
-		}
-	}
 }
 
 .intro {
 	.intro-body > .container {
 		position: absolute;
-	    top: 170px;
+	    top: 240px;
 	    margin: auto;
 	    z-index: 1;
 	    width: 100%;
 
 	    .about-btn {
 	    	position: relative;
-		    top: 100px;
+		    top: 40px;
 		    border: none;
 		    font-size: 4em;
 	    }
@@ -57,4 +45,34 @@ nav.navbar {
 	    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
 	    filter: alpha(opacity=20);
 	}
+}
+
+#login-dropdown, #signup-dropdown {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+	.dropdown-toggle {
+		background-color: transparent !important;
+	}
+
+	ul.dropdown-menu {
+		border-radius: 5px;
+	    padding: 20px 15px 0px;
+		min-width: 280px;
+	    overflow: hidden;
+	}
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.help-block > a {
+		color: #000;
+	    font-size: 12px;
+	    text-transform: none;
+	    text-decoration: underline;
+	}
+	.checkbox > label {
+		color: #000;
+		font-size: 12px;
+	    text-transform: none;
+	}
+
 }
