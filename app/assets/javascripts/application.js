@@ -13,4 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+
+//= require bootstrap-sprockets
+//= require bootstrap
+
+//= require fontawesome-markers.min
+
 //= require_tree .

@@ -1,0 +1,60 @@
+.intro .intro-body .brand-heading {
+	font-size: 70px;
+}
+
+img.logo {
+    position: relative;
+    margin-right: 5px;
+    display: inline;
+    bottom: 5px;
+	width: 20px;
+}
+
+nav.navbar {
+	a.navbar-brand {
+		padding: 5px 15px;
+	}
+
+	ul.navbar-nav {
+		.login-btn, .signup-btn {
+			padding: 15px 5px 5px;
+		}
+		.login-btn:hover, .signup-btn:hover {
+			border-bottom: 1px solid #ccc;
+		}
+		.login-btn {
+			margin-right: 10px;
+		}
+	}
+}
+
+.intro {
+	.intro-body > .container {
+		position: absolute;
+	    top: 170px;
+	    margin: auto;
+	    z-index: 1;
+	    width: 100%;
+
+	    .about-btn {
+	    	position: relative;
+		    top: 100px;
+		    border: none;
+		    font-size: 4em;
+	    }
+	}
+	&:after {
+		position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+
+	    content: " ";
+	    opacity: 0.3;
+	    background-color: #404040;
+
+	    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	    filter: alpha(opacity=20);
+	}
+}
