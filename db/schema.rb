@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416015352) do
+ActiveRecord::Schema.define(version: 20170416165712) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
@@ -19,6 +19,29 @@ ActiveRecord::Schema.define(version: 20170416015352) do
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "account_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "water_purity_reports", force: :cascade do |t|
+    t.string   "reporter_name"
+    t.string   "location"
+    t.decimal  "lat",             precision: 25, scale: 20
+    t.decimal  "lng",             precision: 25, scale: 20
+    t.integer  "water_condition"
+    t.decimal  "virus_ppm"
+    t.decimal  "contaminant_ppm"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  create_table "water_source_reports", force: :cascade do |t|
+    t.string   "reporter_name"
+    t.string   "location"
+    t.decimal  "lat"
+    t.decimal  "lng"
+    t.integer  "water_condition"
+    t.integer  "water_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end

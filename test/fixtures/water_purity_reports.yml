@@ -1,0 +1,35 @@
+# == Schema Information
+#
+# Table name: water_purity_reports
+#
+#  id              :integer          not null, primary key
+#  reporter_name   :string
+#  location        :string
+#  lat             :decimal(25, 20)
+#  lng             :decimal(25, 20)
+#  water_condition :integer
+#  virus_ppm       :decimal(, )
+#  contaminant_ppm :decimal(, )
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reporter_name: MyString
+  location: MyString
+  lat: 9.99
+  lng: 9.99
+  water_condition: 1
+  virus_ppm: 9.99
+  contaminant_ppm: 9.99
+
+two:
+  reporter_name: MyString
+  location: MyString
+  lat: 9.99
+  lng: 9.99
+  water_condition: 1
+  virus_ppm: 9.99
+  contaminant_ppm: 9.99
