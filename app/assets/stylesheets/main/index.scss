@@ -14,6 +14,9 @@ nav.navbar {
 	a.navbar-brand {
 		padding: 5px 15px;
 	}
+	.edit-profile-btn:hover, .logout-btn:hover {
+		text-decoration: underline;
+	}
 }
 
 .intro {
@@ -75,4 +78,17 @@ nav.navbar {
 	    text-transform: none;
 	}
 
+}
+
+.form-group, .form {
+	&.error, &.error input {
+		border-color: #a94442;
+	    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	}
+	span.error-message {
+		color: #a94442;
+	    font-size: 12px;
+	    text-transform: none;
+	}
 }

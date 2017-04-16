@@ -27,25 +27,33 @@
                 <li>
                     <a class="page-scroll" href="#contact">Contact</a>
                 </li>
-                <li class="dropdown" id="login-dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="login-dropdown">
-                        <li>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Login via
-                                <div class="social-buttons">
-                                    <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                                    <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
-                                </div> -->
-                                 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8">
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                <% if logged_in? %>
+                    <li>
+                        <a href="<%= edit_user_path %>" class="edit-profile-btn">Edit Profile</a>
+                    </li>
+                    <li>
+                        <a href="<%= logout_path %>" class="logout-btn" data-method="delete">Logout</a>
+                    </li>
+                <% else %>
+                    <li class="dropdown" id="login-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="login-dropdown">
+                            <li>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Login via
+                                    <div class="social-buttons">
+                                        <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                                        <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+                                    </div> -->
+                                    <form class="form form-login" id="login-form" role="form" method="post" action="login" accept-charset="UTF-8">
+                                        <div class="form-group login-email-form">
+                                            <label class="sr-only" for="login-email">Email address</label>
+                                            <input type="email" name="email" class="form-control" id="login-email" placeholder="Email address" required>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                        <div class="form-group login-password-form">
+                                            <label class="sr-only" for="login-password">Password</label>
+                                            <input type="password" name="password" class="form-control" id="login-password" placeholder="Password" required>
                                             <div class="help-block text-right"><a href="">Forget the password?</a></div>
                                         </div>
                                         <div class="form-group">
@@ -56,43 +64,45 @@
                                             <input type="checkbox"> keep me logged-in
                                             </label>
                                         </div>
-                                 </form>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li class="dropdown" id="signup-dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Sign Up</b> <span class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="signup-dropdown">
-                        <li>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- register via
-                                <div class="social-buttons">
-                                    <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                                    <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
-                                </div> -->
-                                 <form class="form" role="form" method="post" action="signup" accept-charset="UTF-8">
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm password" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-                                        </div>
-                                 </form>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown" id="signup-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Sign Up</b> <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="signup-dropdown">
+                            <li>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- register via
+                                    <div class="social-buttons">
+                                        <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                                        <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+                                    </div> -->
+                                    <form class="form" id="signup-form" role="form" method="post" action="signup" accept-charset="UTF-8">
+                                            <div class="form-group signup-email-form">
+                                                <label class="sr-only" for="signup-email">Email address</label>
+                                                <input type="email" name="user[email]" class="form-control" id="signup-email" placeholder="Email address" required>
+                                            </div>
+                                            <div class="form-group signup-password-form">
+                                                <label class="sr-only" for="signup-password">Password</label>
+                                                <input type="password" name="user[password]" class="form-control" id="signup-password" placeholder="Password" required>
+                                                <input type="password" name="user[password_confirmation]" class="form-control" id="signup-password_confirmation" placeholder="Confirm password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                                            </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        </li>
-                    </ul>
-                </li>
+                            </li>
+                        </ul>
+                    </li>
+
+                <% end %>
 
             </ul>
         </div>
@@ -181,7 +191,83 @@
 <%= javascript_include_tag('vendor/grayscale') %>
 
 <script type="text/javascript">
+
+    var displayErrors = function(errors) {
+        _.forOwn(errors, function(error_msg, error_type) {
+            $errorField = $('.' + error_type);
+
+            if (!$errorField.hasClass('error')) {
+                var errorDOM = '<span class="error-message">' + error_msg + '</span>';
+                $errorField.addClass('error').append(errorDOM);
+            }
+        });
+
+        $('.error input').click(function(e) {
+            var $errorField = $(this).parents('.error');
+            $errorField.removeClass('error');
+            $errorField.find('span').remove();
+        });
+    };
+
     $(document).ready(function () {
         $('.dropdown-toggle').dropdown();
+
+        $('#signup-form').submit(function(e) {
+            e.preventDefault();
+            
+            var csrf_param = $('meta[name="csrf-param"]').attr('content');
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            var params = $(this).serialize();
+            var url = $(this).attr('action');
+
+            var ajaxOptions = {
+                url: url,
+                type: "POST",
+                data: params,
+                headers: { 'X-CSRF-Token': csrf_token },
+                crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
+                success: function(data, status, xhr) {
+                    window.location.href = data['redirect_url'];
+                },
+                error: function(xhr, status, err) {
+                    displayErrors(xhr.responseJSON.errors);
+
+                }
+            };
+            $.ajax(ajaxOptions);
+        });
+
+
+        $('#login-form').submit(function(e) {
+            e.preventDefault();
+            
+            var csrf_param = $('meta[name="csrf-param"]').attr('content');
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            var params = $(this).serialize();
+            var url = $(this).attr('action');
+
+            var ajaxOptions = {
+                url: url,
+                type: "POST",
+                data: params,
+                headers: { 'X-CSRF-Token': csrf_token },
+                crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
+                success: function(data, status, xhr) {
+                    window.location.href = data['redirect_url'];
+                },
+                error: function(xhr, status, err) {
+                    displayErrors(xhr.responseJSON.errors);
+                }
+            };
+            $.ajax(ajaxOptions);
+        });
+
+
     });
 </script>
