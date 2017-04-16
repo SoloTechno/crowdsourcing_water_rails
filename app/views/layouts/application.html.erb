@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
     <title>Crowdsourcing Water</title>
     <%= csrf_meta_tags %>
 
@@ -18,10 +18,20 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
-  </head>
+    </head>
 
-  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-    <%= yield %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-  </body>
+    <%= render 'layouts/shared/navbar' %>
+
+    <body id="page-top" class="<%= 'not-main-page' unless current_page? root_path %>" data-spy="scroll" data-target=".navbar-fixed-top">
+        <%= yield %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+        <footer>
+            <div class="container text-right">
+                <span>Copyright &copy; Your Website 2016</span>
+            </div>
+        </footer>
+
+    </body>
+
 </html>

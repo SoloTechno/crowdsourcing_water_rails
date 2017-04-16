@@ -22,8 +22,8 @@ class User < ApplicationRecord
     admin: 3
   }
 
-	validates :first_name,  presence: true, length: { minimum: 1, maximum: 100 }, on: :edit
-	validates :last_name,  presence: true, length: { minimum: 1, maximum: 100 }, on: :edit
+	validates :first_name,  presence: true, length: { minimum: 1, maximum: 100 }, on: :update
+	validates :last_name,  presence: true, length: { minimum: 1, maximum: 100 }, on: :update
 
 	validates :email, presence: true, length: { maximum: 300 },
 	                  format: { with: /\A[\w+\-.]+@[a-z\-.]+\.[a-z]+\z/i },

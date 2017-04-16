@@ -1,3 +1,18 @@
+body {
+	background-color: rgba(86, 160, 211, 0.7);
+	&.not-main-page {
+		margin-top: 130px;
+	}
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body.not-main-page footer {
+	position: absolute;
+    bottom: -130px;
+    width: 100%;
+    background-color: #146eb4;
+}
+
 .intro .intro-body .brand-heading {
 	font-size: 70px;
 }
@@ -11,6 +26,9 @@ img.logo {
 }
 
 nav.navbar {
+	&.not-main-page {
+		background-color: rgb(86, 160, 211);
+	}
 	a.navbar-brand {
 		padding: 5px 15px;
 	}
@@ -18,6 +36,11 @@ nav.navbar {
 		text-decoration: underline;
 	}
 }
+
+.navbar-custom.not-main-page .nav li a:hover {
+	color: rgba(140, 201, 242, 0.8);
+}
+
 
 .intro {
 	.intro-body > .container {

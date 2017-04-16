@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    
+
   end
 
   def show
@@ -46,13 +46,22 @@ class UsersController < ApplicationController
   end
 
   def update
-    # if params[:user].present?
-    #   if @user.update(user_params)
-    #     redirect_to user_path(@user)
-    #   else
-    #     redirect_to edit_path(@user), flash: { error: @user.errors.messages }
-    #   end
-    # end
+    if params[:user].present? && @user.update(user_params)
+      redirect_to root_path
+    else
+      errors = {}
+      @user.errors.each do |key, value|
+        message = "#{key.to_s.capitalize!} #{value}"
+        key = "#{key}-form"
+        flash[key] = errors[key] = "#{message}"
+      end
+
+      if request.xhr? || request.env['HTTP_X_CSRF_TOKEN'].present?
+        render json: { errors: errors }, status: :forbidden
+      else
+        redirect_to root_path
+      end
+    end
   end
 
   def destroy

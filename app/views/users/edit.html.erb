@@ -1,0 +1,98 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-3 col-md-6 edit-profile">
+
+			<%= form_for @user, url: { action: :update }, id: 'edit-profile-form' do |f| %>
+				<fieldset>
+					<div class="form-group edit-email-form">
+						<label class="sr-only" for="edit-email">Email address</label>
+						<label for="edit-email">Email address</label>
+						<input type="email" name="user[email]" class="form-control" id="edit-email" placeholder="Email address" value="<%= @user.email %>" required>
+					</div>
+
+					<div class="form-group first_name-form">
+						<label class="sr-only" for="edit-first-name">First name</label>
+						<label for="edit-first-name">First name</label>
+						<input type="text" name="user[first_name]" class="form-control" id="edit-first-name" placeholder="First Name" value="<%= @user.first_name %>" required>
+					</div>
+
+					<div class="form-group last_name-form">
+						<label class="sr-only" for="edit-last-name">Last name</label>
+						<label for="edit-last-name">Last name</label>
+						<input type="text" name="user[last_name]" class="form-control" id="edit-last-name" placeholder="Last Name" value="<%= @user.last_name %>" required>
+					</div>
+
+					<div class="form-group account_type-form">
+						<label class="sr-only" for="select-account-type">Account type</label>
+						<label class=" control-label" for="select-account-type">Account type</label>
+						<div class="">
+							<select id="select-account-type" name="user[account_type]" class="form-control">
+								<% User.account_types.each do |user_type, v| %>
+									<option value="<%= user_type %>" <%= 'selected' if @user.account_type == user_type %>><%= user_type.capitalize %></option>
+								<% end %>
+							</select>
+						</div>
+					</div>
+
+                    <div class="help-block text-right"><a href="">Change the password</a></div>
+
+                    <button type="submit" class="btn btn-default">Submit</button>
+
+				</fieldset>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	var displayErrors = function(errors) {
+        _.forOwn(errors, function(error_msg, error_type) {
+            $errorField = $('.' + error_type);
+
+            if (!$errorField.hasClass('error')) {
+                var errorDOM = '<span class="error-message">' + error_msg + '</span>';
+                $errorField.addClass('error').append(errorDOM);
+            }
+        });
+
+        $('.error input').click(function(e) {
+            var $errorField = $(this).parents('.error');
+            $errorField.removeClass('error');
+            $errorField.find('span').remove();
+        });
+    };
+
+	$(document).ready(function () {
+
+        $('#edit-profile-form').submit(function(e) {
+            e.preventDefault();
+            
+            var csrf_param = $('meta[name="csrf-param"]').attr('content');
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            var params = $(this).serialize();
+            var url = $(this).attr('action');
+
+            var ajaxOptions = {
+                url: url,
+                type: "POST",
+                data: params,
+                headers: { 'X-CSRF-Token': csrf_token },
+                crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
+                success: function(data, status, xhr) {
+                    window.location.href = data['redirect_url'];
+                },
+                error: function(xhr, status, err) {
+                	debugger;
+                    displayErrors(xhr.responseJSON.errors);
+
+                }
+            };
+            $.ajax(ajaxOptions);
+        });
+
+    });
+</script>
