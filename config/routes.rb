@@ -11,11 +11,8 @@ Rails.application.routes.draw do
   post 'signup' => 'users#create'
 
   resources :users do
-  	# member do
-  	# 	post :edit_profile
-  	# end
-  	# resources :water_purity_reports
-  	# resources :water_source_reports
+  	resources :water_purity_reports
+  	resources :water_source_reports
   end
 
 end

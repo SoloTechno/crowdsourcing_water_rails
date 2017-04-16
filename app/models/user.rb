@@ -15,6 +15,9 @@
 
 class User < ApplicationRecord
 
+  has_many :water_purity_reports
+  has_many :water_source_reports
+
 	enum account_type: {
     user: 0,
     worker: 1,
