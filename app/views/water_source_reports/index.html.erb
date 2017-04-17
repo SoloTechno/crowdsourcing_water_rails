@@ -1,0 +1,71 @@
+<div class="container">
+	<div class="row">
+		<div id="water-reports-map"></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	function drawSingleMapMarkers(map_data) {
+		var bounds = new google.maps.LatLngBounds();
+
+		_.each(map_data, function(data) {
+		  var position = new google.maps.LatLng(data['lat'], data['lng']);
+		  bounds.extend(position);
+
+		  var marker = new google.maps.Marker({
+		    position: position,
+		    map: window.guideMap,
+		    icon: {
+		        path: fontawesome.markers.MAP_MARKER,
+		        scale: 0.8,
+		        strokeWeight: 1,
+		        strokeColor: '#404040',
+		        strokeOpacity: 1,
+		        fillColor: '#fa5c4f',
+		        fillOpacity: 1,
+		    }
+		  });
+		  // Keeps enough distance of a map for single marker
+		  if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+		    var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
+		    var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
+		    bounds.extend(extendPoint1);
+		    bounds.extend(extendPoint2);
+		  }
+		  window.guideMap.fitBounds(bounds);
+		})
+	}
+
+	function drawMarkers() {
+		var url = '/water_reports.json';
+		$.ajax({
+			url: url,
+			type: 'GET',
+			success: function(data, status, xhr) {
+				drawSingleMapMarkers(data);
+			},
+		})
+	}
+
+	$('document').ready(function() {
+
+	    window.initMap = function() {
+			window.guideMap = new google.maps.Map(document.getElementById('water-reports-map'), {
+				zoom: 10,
+				center: { lat: 33.7490, lng: 84.3880 },
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: false,
+				zoomControl: true,
+				zoomControlOptions: {
+					position: google.maps.ControlPosition.TOP_RIGHT
+				},
+			});
+			drawMarkers();
+		};
+
+    };
+</script>
+
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEeXl5Prt_xeE_NKh4oWUFQyPI9Y1IZEE&callback=initMap"></script>

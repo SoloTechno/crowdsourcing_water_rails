@@ -3,6 +3,7 @@
 # Table name: water_source_reports
 #
 #  id              :integer          not null, primary key
+#  user_id         :integer
 #  reporter_name   :string
 #  location        :string
 #  lat             :decimal(, )
