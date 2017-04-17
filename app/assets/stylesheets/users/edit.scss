@@ -1,13 +1,17 @@
+.popover.fade.top.in {
+    color: #000;
+}
+.form-group label {
+    font-size: 12px;
+    color: rgba(0,0,0,0.8);
+}
+
 .submit-form {
     border-radius: 5px;
     margin: auto;
     padding: 25px;
     background-color: #fff;
     width: 50%;
-
-    label {
-        color: rgba(0,0,0,0.8);
-    }
 
     .btn[type=submit] {
         width: 100%;

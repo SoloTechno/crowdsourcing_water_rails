@@ -35,6 +35,9 @@ nav.navbar {
 	.edit-profile-btn:hover, .logout-btn:hover {
 		text-decoration: underline;
 	}
+	#water-report-dropdown ul.dropdown-menu li a:hover {
+		color: rgba(0, 0, 0, 0.3);
+	}
 }
 
 .navbar-custom.not-main-page .nav li a:hover {
