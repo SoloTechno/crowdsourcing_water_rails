@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170416165712) do
   end
 
   create_table "water_purity_reports", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "reporter_name"
     t.string   "location"
     t.decimal  "lat",             precision: 25, scale: 20
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 20170416165712) do
   end
 
   create_table "water_source_reports", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "reporter_name"
     t.string   "location"
     t.decimal  "lat"

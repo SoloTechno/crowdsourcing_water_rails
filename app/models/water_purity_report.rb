@@ -3,6 +3,7 @@
 # Table name: water_purity_reports
 #
 #  id              :integer          not null, primary key
+#  user_id         :integer
 #  reporter_name   :string
 #  location        :string
 #  lat             :decimal(25, 20)
@@ -16,5 +17,12 @@
 
 class WaterPurityReport < ApplicationRecord
 	belongs_to :user
+
+	enum water_condition: {
+		waste: 0,
+		'treatable-clear': 1,
+		'treatable-muddy': 2,
+		potable: 3
+	}
 
 end
