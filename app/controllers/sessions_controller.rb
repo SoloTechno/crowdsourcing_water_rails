@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  before_action :save_redirect_url, only: [:new]
   skip_before_action :verify_authenticity_token
 
   def new

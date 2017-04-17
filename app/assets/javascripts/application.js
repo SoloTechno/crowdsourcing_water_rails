@@ -18,5 +18,6 @@
 //= require bootstrap
 
 //= require fontawesome-markers.min
+//= require google_autocomplete
 
 //= require_tree .
