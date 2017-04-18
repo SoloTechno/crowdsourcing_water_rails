@@ -8,27 +8,11 @@
 
 	function drawSingleMapMarkers(map_data) {
 		var bounds = new google.maps.LatLngBounds();
-		// var infoWindow = new google.maps.InfoWindow(), marker, i;
+		var markerColor = '';
 
 		_.each(map_data, function(data) {
 			var position = new google.maps.LatLng(data['lat'], data['lng']);
 			bounds.extend(position);
-
-			// if virus_ppm is undefined, put data for a water purity report
-			// else put data for a water source report
-			var marker = new google.maps.Marker({
-				position: position,
-				map: window.waterReportMap,
-				icon: {
-				path: fontawesome.markers.MAP_MARKER,
-				scale: 0.8,
-				strokeWeight: 1,
-				strokeColor: '#404040',
-				strokeOpacity: 1,
-				fillColor: '#56a0d3',
-				fillOpacity: 1,
-				}
-			});
 
 			var infoWindowContent = 
 				'<div class="info-window"' +
@@ -40,13 +24,31 @@
 			if (data['virus_ppm'] === undefined) {
 				infoWindowContent += '<p>Water type: ' + data['water_type'] +
 					'</p></div></div>';
+				markerColor = '#56a0d3';
 			} else {
 				infoWindowContent += '<p>Virus ppm: ' + data['virus_ppm'] + '</p>' +
 					'<p>Contaminant ppm: ' + data['contaminant_ppm'] + '</p></div></div>';
+				markerColor = '#fa5c4f';
 			}
 
 			var infoWindow = new google.maps.InfoWindow({
 				content: infoWindowContent
+			});
+
+			// if virus_ppm is undefined, put data for a water purity report
+			// else put data for a water source report
+			var marker = new google.maps.Marker({
+				position: position,
+				map: window.waterReportMap,
+				icon: {
+					path: fontawesome.markers.MAP_MARKER,
+					scale: 0.8,
+					strokeWeight: 1,
+					strokeColor: '#404040',
+					strokeOpacity: 1,
+					fillColor: markerColor,
+					fillOpacity: 1,
+				}
 			});
 
 			marker.addListener('click', function() {

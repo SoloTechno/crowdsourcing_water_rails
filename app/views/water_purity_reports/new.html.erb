@@ -1,0 +1,118 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-3 col-md-6 submit-form">
+
+			<%= form_for @water_purity_report, url: user_water_purity_report_path(user_id: @user.id, id: @water_purity_report), id: 'water-purity-report-form' do |f| %>
+				<fieldset>
+                    <div class="form-group">                
+                        <label class="sr-only" for="report-id">Report id</label>
+                        <label for="report-id">Report ID: <span><%= @water_purity_report.id %></span></label>
+                    </div>
+
+					<div class="form-group name-form">
+						<label class="sr-only" for="reporter-name">Reporter name</label>
+						<label for="reporter-name">Reporter name</label>
+						<input type="text" name="water_purity_report[reporter_name]" class="form-control" id="reporter-name" placeholder="Reporter name" value="<%= @user.name if @water_purity_report.reporter_name.blank? %>" required>
+					</div>
+
+                    <div class="form-group location-form">
+                        <label for="locations-input">Location</label>
+                        <a class="location-popover" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Latitude and longitude are saved when the location input is autocompleted">
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </a>
+                        <input id="location-input" class="form-control" autocomplete="off" type="text" placeholder="Type in a location" name="water_purity_report[location]">
+                        <div id="latlng">
+                            <input type="hidden" class="lat" name="water_purity_report[lat]" value="">
+                            <input type="hidden" class="lng" name="water_purity_report[lng]" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group water_condition-form">
+                        <label class="sr-only" for="select-water-condition">Water condition</label>
+                        <label class=" control-label" for="select-water-condition">Water condition</label>
+                        <div class="">
+                            <select id="select-water-condition" name="water_purity_report[water_condition]" class="form-control">
+                                <% WaterPurityReport.water_conditions.each do |water_condition, v| %>
+                                    <option value="<%= water_condition %>" <%= 'selected' if @water_purity_report.water_condition == water_condition %>><%= water_condition.capitalize %></option>
+                                <% end %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group virus_ppm-form">
+                        <label class="sr-only" for="virus-ppm">Virus PPM</label>
+                        <label for="virus-ppm">Virus PPM</label>
+                        <input type="text" name="water_purity_report[virus_ppm]" class="form-control" id="virus-ppm" placeholder="Virus PPM" value="<%= @water_purity_report.virus_ppm %>" required>
+                    </div>
+
+                    <div class="form-group contaminant_ppm-form">
+                        <label class="sr-only" for="virus-ppm">Contaminant PPM</label>
+                        <label for="contaminant-ppm">Contaminant PPM</label>
+                        <input type="text" name="water_purity_report[contaminant_ppm]" class="form-control" id="contaminant-ppm" placeholder="Contaminant PPM" value="<%= @water_purity_report.contaminant_ppm %>" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-default">Submit</button>
+
+				</fieldset>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+
+<%= javascript_include_tag 'google_autocomplete' %>
+
+<script type="text/javascript">
+
+	var displayErrors = function(errors) {
+        _.forOwn(errors, function(error_msg, error_type) {
+            $errorField = $('.' + error_type);
+
+            if (!$errorField.hasClass('error')) {
+                var errorDOM = '<span class="error-message">' + error_msg + '</span>';
+                $errorField.addClass('error').append(errorDOM);
+            }
+        });
+
+        $('.error input').click(function(e) {
+            var $errorField = $(this).parents('.error');
+            $errorField.removeClass('error');
+            $errorField.find('span').remove();
+        });
+    };
+
+	$(document).ready(function () {
+
+        $('.location-popover').popover();
+
+        $('#water-purity-report-form').submit(function(e) {
+            e.preventDefault();
+            
+            var csrf_param = $('meta[name="csrf-param"]').attr('content');
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            var params = $(this).serialize();
+            var url = $(this).attr('action');
+
+            var ajaxOptions = {
+                url: url,
+                type: "POST",
+                data: params,
+                headers: { 'X-CSRF-Token': csrf_token },
+                crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
+                success: function(data, status, xhr) {
+                    window.location.href = data['redirect_url'];
+                },
+                error: function(xhr, status, err) {
+                    displayErrors(xhr.responseJSON.errors);
+                }
+            };
+            $.ajax(ajaxOptions);
+        });
+
+    });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEeXl5Prt_xeE_NKh4oWUFQyPI9Y1IZEE&language=en&libraries=places&callback=initAutocomplete"></script>
