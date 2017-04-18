@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get 'signup' => 'users#new'
   post 'signup' => 'users#create'
 
+  get 'water_reports' => 'water_source_reports#index'
+
+
   resources :users do
   	resources :water_purity_reports
   	resources :water_source_reports

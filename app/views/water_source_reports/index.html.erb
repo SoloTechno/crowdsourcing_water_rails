@@ -8,33 +8,61 @@
 
 	function drawSingleMapMarkers(map_data) {
 		var bounds = new google.maps.LatLngBounds();
+		// var infoWindow = new google.maps.InfoWindow(), marker, i;
 
 		_.each(map_data, function(data) {
-		  var position = new google.maps.LatLng(data['lat'], data['lng']);
-		  bounds.extend(position);
+			var position = new google.maps.LatLng(data['lat'], data['lng']);
+			bounds.extend(position);
 
-		  var marker = new google.maps.Marker({
-		    position: position,
-		    map: window.guideMap,
-		    icon: {
-		        path: fontawesome.markers.MAP_MARKER,
-		        scale: 0.8,
-		        strokeWeight: 1,
-		        strokeColor: '#404040',
-		        strokeOpacity: 1,
-		        fillColor: '#fa5c4f',
-		        fillOpacity: 1,
-		    }
-		  });
-		  // Keeps enough distance of a map for single marker
-		  if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
-		    var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
-		    var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
-		    bounds.extend(extendPoint1);
-		    bounds.extend(extendPoint2);
-		  }
-		  window.guideMap.fitBounds(bounds);
-		})
+			// if virus_ppm is undefined, put data for a water purity report
+			// else put data for a water source report
+			var marker = new google.maps.Marker({
+				position: position,
+				map: window.waterReportMap,
+				icon: {
+				path: fontawesome.markers.MAP_MARKER,
+				scale: 0.8,
+				strokeWeight: 1,
+				strokeColor: '#404040',
+				strokeOpacity: 1,
+				fillColor: '#56a0d3',
+				fillOpacity: 1,
+				}
+			});
+
+			var infoWindowContent = 
+				'<div class="info-window"' +
+					'<div class="title"><h3>' + data['report_type'] + '</h3></div>' +
+					'<div class="content">' +
+						'<p>Reporter: ' + data['reporter_name'] + '</p>' +
+						'<p>Latitude: ' + data['lat'] + ' / Longitude: ' + data['lng'] + '</p>' + 
+						'<p>Water condition: ' + data['water_condition'] + '</p>';
+			if (data['virus_ppm'] === undefined) {
+				infoWindowContent += '<p>Water type: ' + data['water_type'] +
+					'</p></div></div>';
+			} else {
+				infoWindowContent += '<p>Virus ppm: ' + data['virus_ppm'] + '</p>' +
+					'<p>Contaminant ppm: ' + data['contaminant_ppm'] + '</p></div></div>';
+			}
+
+			var infoWindow = new google.maps.InfoWindow({
+				content: infoWindowContent
+			});
+
+			marker.addListener('click', function() {
+				infoWindow.open(window.waterReportMap, marker);
+			});
+
+
+			// Keeps enough distance of a map for single marker
+			if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+			var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
+			var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
+				bounds.extend(extendPoint1);
+				bounds.extend(extendPoint2);
+			}
+			window.waterReportMap.fitBounds(bounds);
+		});
 	}
 
 	function drawMarkers() {
@@ -51,7 +79,7 @@
 	$('document').ready(function() {
 
 	    window.initMap = function() {
-			window.guideMap = new google.maps.Map(document.getElementById('water-reports-map'), {
+			window.waterReportMap = new google.maps.Map(document.getElementById('water-reports-map'), {
 				zoom: 10,
 				center: { lat: 33.7490, lng: 84.3880 },
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -64,7 +92,7 @@
 			drawMarkers();
 		};
 
-    };
+    });
 </script>
 
 

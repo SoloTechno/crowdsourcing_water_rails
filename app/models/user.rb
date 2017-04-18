@@ -25,7 +25,7 @@ class User < ApplicationRecord
     admin: 3
   }
 
-	validates :first_name,  presence: true, length: { minimum: 1, maximum: 100 }, on: :update
+	validates :first_name, presence: true, length: { minimum: 1, maximum: 100 }, on: :update
 	validates :last_name,  presence: true, length: { minimum: 1, maximum: 100 }, on: :update
 
 	validates :email, presence: true, length: { maximum: 300 },
@@ -39,6 +39,39 @@ class User < ApplicationRecord
 	def default_account_type
 		self.account_type ||= User.account_types[:user]
 	end
+
+  def name
+    "#{self.first_name} #{self.last_name}"
+  end
+
+  def self.get_map_data
+    map_data = []
+    water_reports = WaterSourceReport.where.not(reporter_name: nil) + WaterPurityReport.where.not(reporter_name: nil)
+
+    water_reports.each do |report|
+      if report.class.name == 'WaterPurityReport'
+        map_data << {
+          'report_type': report.class.name.underscore.humanize,
+          'reporter_name': report.reporter_name,
+          'lat': report.lat,
+          'lng': report.lng,
+          'water_condition': report.water_condition,
+          'virus_ppm': report.virus_ppm,
+          'contaminant_ppm': report.contaminant_ppm
+        }
+      else
+        map_data << {
+          'report_type': report.class.name.underscore.humanize,
+          'reporter_name': report.reporter_name,
+          'lat': report.lat,
+          'lng': report.lng,
+          'water_type': report.water_type,
+          'water_condition': report.water_condition
+        }
+      end
+    end
+    map_data
+  end
 
 	# Returns the hash digest of the given string.
   def User.digest(string)
