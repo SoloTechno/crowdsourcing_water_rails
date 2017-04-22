@@ -27,6 +27,7 @@ class WaterSourceReportsController < ApplicationController
 	end
 
 	def show
+		@water_source_report = WaterSourceReport.find(params[:id])
 	end
 	
 	def update
@@ -42,8 +43,8 @@ class WaterSourceReportsController < ApplicationController
 	private
 
 		def correct_user
-      redirect_to root_url unless current_user?(@user)
-    end
+	      redirect_to root_url unless current_user?(@user)
+	    end
 
 		def create_water_source_report
 			@water_source_report = WaterSourceReport.create(user_id: @user.id)

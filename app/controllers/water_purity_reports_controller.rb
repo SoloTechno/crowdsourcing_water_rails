@@ -27,6 +27,7 @@ class WaterPurityReportsController < ApplicationController
 	end
 
 	def show
+		@water_purity_report = WaterPurityReport.find(params[:id])
 	end
 	
 	def update

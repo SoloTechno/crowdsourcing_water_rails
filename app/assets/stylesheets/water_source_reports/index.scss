@@ -9,3 +9,14 @@
 		margin-bottom: 0;
 	}
 }
+
+.show.container {
+	color: rgba(0, 0, 0, 0.8);
+
+	.content {
+		border-radius: 5px;
+	    padding: 25px;
+	    background-color: #fff;
+	    width: 50%;
+	}
+}

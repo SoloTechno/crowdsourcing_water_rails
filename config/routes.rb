@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   post 'signup' => 'users#create'
 
   get 'water_reports' => 'water_source_reports#index'
+  get 'water_source_reports/:id' => 'water_source_reports#show', as: 'water_source_reports'
+  get 'water_purity_reports/:id' => 'water_purity_reports#show', as: 'water_purity_reports'
 
 
   resources :users do

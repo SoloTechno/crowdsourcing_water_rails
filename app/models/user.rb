@@ -51,6 +51,7 @@ class User < ApplicationRecord
     water_reports.each do |report|
       if report.class.name == 'WaterPurityReport'
         map_data << {
+          'report_url': Rails.application.routes.url_helpers.water_purity_reports_path(id: report.id),
           'report_type': report.class.name.underscore.humanize,
           'reporter_name': report.reporter_name,
           'lat': report.lat,
@@ -61,6 +62,7 @@ class User < ApplicationRecord
         }
       else
         map_data << {
+          'report_url': Rails.application.routes.url_helpers.water_source_reports_path(id: report.id),
           'report_type': report.class.name.underscore.humanize,
           'reporter_name': report.reporter_name,
           'lat': report.lat,

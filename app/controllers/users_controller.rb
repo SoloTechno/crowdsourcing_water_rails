@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     # redirect_url = params[:redirect_url].present? ? params[:redirect_url] : root_path
 
     if @user.save
-
+      log_in @user
       if request.xhr? || request.env['HTTP_X_CSRF_TOKEN'].present?
         render json: { redirect_url: root_path }
       else
