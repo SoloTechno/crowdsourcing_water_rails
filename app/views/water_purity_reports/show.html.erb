@@ -30,6 +30,10 @@
               <dt>Contaminant PPM: </dt>
               <dd><%= @water_purity_report.contaminant_ppm %></dd>
             </dl>
+            <dl>
+              <dt>Posted on </dt>
+              <dd><%= @water_purity_report.created_at.to_date %></dd>
+            </dl>
 
             <% if current_user.present? && current_user.account_type == 'manager' || current_user.account_type == 'admin' %>
               <%= link_to 'Delete', water_purity_reports_destroy_path(id: @water_purity_report.id),

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update]
   before_action :set_user, except: [:new, :create]
   before_action :correct_user, except: [:new, :show]
-  before_action :is_admin_user, only: [:user_lists, :ban_user, :unban_user]
+  before_action :is_admin_user, only: [:user_lists, :ban_user, :unban_user, :destroy]
 
   def user_lists
     @users = User.all
@@ -70,21 +70,27 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    # @user.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-    #   format.json { head :no_content }
-    # end
+    User.find(params[:user_id]).destroy
+    respond_to do |format|
+      format.html { redirect_to user_lists_path, notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   def ban_user
     User.find(params[:user_id]).update(account_type: 'banned')
-    redirect_to user_lists_path(id: @user.id)
+    respond_to do |format|
+      format.html { redirect_to user_lists_path(id: @user.id), notice: 'User was successfully banned.' }
+      format.json { head :no_content }
+    end
   end
 
   def unban_user
     User.find(params[:user_id]).update(account_type: 'user')
-    redirect_to user_lists_path(id: @user.id)
+    respond_to do |format|
+      format.html { redirect_to user_lists_path(id: @user.id), notice: 'User was successfully unbanned.' }
+      format.json { head :no_content }
+    end
   end
 
   private

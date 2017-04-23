@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get ':id/ban_user/:user_id' => 'users#ban_user', as: 'ban_user'
   get ':id/unban_user/:user_id' => 'users#unban_user', as: 'unban_user'
   get ':id/user_lists' => 'users#user_lists', as: 'user_lists'
+  delete ':id/delete_account/:user_id' => 'users#destroy', as: 'delete_account'
+
 
   get 'water_reports' => 'water_source_reports#index'
   get 'water_source_reports/:id' => 'water_source_reports#show', as: 'water_source_reports'

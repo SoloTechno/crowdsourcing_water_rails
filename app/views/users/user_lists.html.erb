@@ -1,6 +1,10 @@
 <div class="container user-lists">
 	<div class="row">
 		<div class="col-md-offset-3 col-md-6">
+			<% if flash[:notice] %>
+				<div class="alert alert-danger"><%= flash[:notice] %></div>
+			<% end %>
+
 			<% @users.each do |user| %>
 				<div class="user-content">
 					<dl>
@@ -19,7 +23,11 @@
 					<% if user.account_type == 'banned' %>
 						<a href="<%= unban_user_path(id: @user, user_id: user.id) %>" class="btn btn-success">Unban user</a>
 					<% else %>
-						<a href="<%= ban_user_path(id: @user, user_id: user.id) %>" class="btn btn-danger">Ban user</a>
+						<a href="<%= ban_user_path(id: @user, user_id: user.id) %>" class="btn btn-warning">Ban user</a>
+					<% end %>
+
+					<% if @user.account_type == 'admin' %>
+						<a data-confirm="Do you really want to delete <%= user.name %>'s account?" data-method="delete" href="<%= delete_account_path(id: @user, user_id: user.id) %>" class="btn btn-danger">Delete acccount</a>
 					<% end %>
 				</div>
 			<% end %>
