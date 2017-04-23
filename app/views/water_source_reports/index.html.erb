@@ -1,5 +1,8 @@
 <div class="container">
 	<div class="row">
+		<% if flash[:notice] %>
+			<div class="alert alert-danger"><%= flash[:notice] %></div>
+		<% end %>
 		<div id="water-reports-map"></div>
 	</div>
 </div>
