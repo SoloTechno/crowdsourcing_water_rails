@@ -22,7 +22,8 @@ class User < ApplicationRecord
     user: 0,
     worker: 1,
     manager: 2,
-    admin: 3
+    admin: 3,
+    banned: 4,
   }
 
 	validates :first_name, presence: true, length: { minimum: 1, maximum: 100 }, on: :update

@@ -26,7 +26,16 @@
               <dt>Water Condition: </dt>
               <dd><%= @water_source_report.water_condition %></dd>
             </dl>
+            <dl>
+              <dt>Created: </dt>
+              <dd><%= @water_source_report.water_condition %></dd>
+            </dl>
 
+            <% if current_user.present? && current_user.account_type == 'manager' || current_user.account_type == 'admin' %>
+              <%= link_to 'Delete', water_source_reports_destroy_path(id: @water_source_report.id),
+                data: {:confirm => 'Are you sure?'}, method: 'delete', class: 'btn btn-danger' %>
+            <% end %>
         </div>
+
     </div>
 </div>

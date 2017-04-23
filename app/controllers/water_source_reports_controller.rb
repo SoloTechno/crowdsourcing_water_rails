@@ -38,6 +38,10 @@ class WaterSourceReportsController < ApplicationController
 	end
 
 	def destroy
+		@water_source_report = WaterSourceReport.find(params[:id])
+		@water_source_report.destroy
+
+		redirect_to water_reports_path
 	end
 
 	private

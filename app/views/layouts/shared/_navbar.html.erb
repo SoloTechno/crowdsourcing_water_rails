@@ -41,6 +41,11 @@
                             <li>
                                 <a href="<%= water_reports_path %>">View water reports</a>
                             </li>
+                            <% if current_user.account_type == 'admin' %>
+                                <li>
+                                    <a href="<%= user_lists_path(id: current_user.id) %>">User Lists</a>
+                                </li>
+                            <% end %>
                         </ul>
                     </li>
                 <% end %>

@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     end
 
     user = User.find_by(email: params[:email].downcase)
-    if user.present? && user.authenticate(params[:password])
+    if user.present? && user.authenticate(params[:password]) && user.account_type != 'banned'
       log_in user
 
       if params[:remember_me].present?
@@ -27,7 +27,11 @@ class SessionsController < ApplicationController
       end
     # Throws error messages if not authenticated
     else
-      errors["form-login"] = "Your email or password is not valid. Please try again." 
+      if user.account_type == 'banned'
+        errors["form-login"] = "The account is banned. Please contact the administrator."
+      else
+        errors["form-login"] = "Your email or password is not valid. Please try again." 
+      end
 
       if request.xhr? || request.env['HTTP_X_CSRF_TOKEN'].present?
         render json: { errors: errors }, status: :forbidden

@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, except: [:new, :create]
   before_action :correct_user, except: [:new, :show]
+  before_action :is_admin_user, only: [:user_lists, :ban_user, :unban_user]
+
+  def user_lists
+    @users = User.all
+  end
 
   def new
     @user = User.new
@@ -72,7 +77,21 @@ class UsersController < ApplicationController
     # end
   end
 
+  def ban_user
+    User.find(params[:user_id]).update(account_type: 'banned')
+    redirect_to user_lists_path(id: @user.id)
+  end
+
+  def unban_user
+    User.find(params[:user_id]).update(account_type: 'user')
+    redirect_to user_lists_path(id: @user.id)
+  end
+
   private
+
+    def is_admin_user
+      redirect_to root_path unless @user.account_type == 'admin'
+    end
 
     def set_user
       @user = User.find(params[:id])

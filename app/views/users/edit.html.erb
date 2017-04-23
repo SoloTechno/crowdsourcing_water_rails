@@ -35,7 +35,7 @@
 						<div class="">
 							<select id="select-account-type" name="user[account_type]" class="form-control">
 								<% User.account_types.each do |user_type, v| %>
-									<option value="<%= user_type %>" <%= 'selected' if @user.account_type == user_type %>><%= user_type.capitalize %></option>
+								   <option value="<%= user_type %>" <%= 'selected' if @user.account_type == user_type %>><%= user_type.capitalize %></option>
 								<% end %>
 							</select>
 						</div>
