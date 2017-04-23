@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update]
   before_action :set_user, except: [:new, :create]
   before_action :correct_user, except: [:new, :show]
-  before_action :is_admin_user, only: [:user_lists, :ban_user, :unban_user, :destroy]
+  before_action :is_admin_user,
+    only: [:user_lists, :ban_user, :unban_user, :destroy, :view_security_log]
 
   def user_lists
     @users = User.all
@@ -91,6 +92,11 @@ class UsersController < ApplicationController
       format.html { redirect_to user_lists_path(id: @user.id), notice: 'User was successfully unbanned.' }
       format.json { head :no_content }
     end
+  end
+
+  def view_security_log
+    file_path = "#{Rails.root}/log/production.log"
+    @security_log = File.read(file_path)
   end
 
   private

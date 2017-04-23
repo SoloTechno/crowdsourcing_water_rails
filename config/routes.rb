@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get ':id/user_lists' => 'users#user_lists', as: 'user_lists'
   delete ':id/delete_account/:user_id' => 'users#destroy', as: 'delete_account'
 
+  get ':id/view_security_log' => 'users#view_security_log', as: 'view_security_log'
+
 
   get 'water_reports' => 'water_source_reports#index'
   get 'water_source_reports/:id' => 'water_source_reports#show', as: 'water_source_reports'

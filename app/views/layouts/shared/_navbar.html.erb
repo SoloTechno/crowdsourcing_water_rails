@@ -29,6 +29,12 @@
                     </li> -->
                 <% end %>
                 <% if logged_in? %>
+                    <% if current_user.account_type == 'admin' %>
+                        <li>
+                            <a href="<%= user_lists_path(id: current_user.id) %>">User Lists</a>
+                        </li>
+                        <li><a href="<%= view_security_log_path(id: current_user.id) %>">View security log</a></li>
+                    <% end %>
                     <li class="dropdown" id="water-report-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Water report</b> <span class="caret"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="water-report-dropdown">
@@ -41,16 +47,8 @@
                             <li>
                                 <a href="<%= water_reports_path %>">View water reports</a>
                             </li>
-                            <% if current_user.account_type == 'admin' %>
-                                <li>
-                                    <a href="<%= user_lists_path(id: current_user.id) %>">User Lists</a>
-                                </li>
-                            <% end %>
                         </ul>
                     </li>
-                <% end %>
-
-                <% if logged_in? %>
                     <li>
                         <a href="<%= edit_user_path(current_user) %>" class="edit-profile-btn">Edit Profile</a>
                     </li>
