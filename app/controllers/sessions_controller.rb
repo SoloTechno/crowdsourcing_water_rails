@@ -33,6 +33,15 @@ class SessionsController < ApplicationController
         errors["form-login"] = "Your email or password is not valid. Please try again." 
       end
 
+      if session["incorrect_login_attemps_#{params[:email]}"].nil?
+        session["incorrect_login_attemps_#{params[:email]}"] = 1
+      elsif session["incorrect_login_attemps_#{params[:email]}"] >= 3
+        user.update(account_type: 'banned')
+        errors["form-login"] = "The account is banned. Please contact the administrator."
+      else
+        session["incorrect_login_attemps_#{params[:email]}"] += 1
+      end
+
       if request.xhr? || request.env['HTTP_X_CSRF_TOKEN'].present?
         render json: { errors: errors }, status: :forbidden
       else
